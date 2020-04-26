@@ -6,4 +6,4 @@ checks:
   argument-count:
     enabled: false
 exclude_patterns:
-  - "worker_lambda/helpers/lob/"
+  - "worker_lambda/helpers/lob/**"
