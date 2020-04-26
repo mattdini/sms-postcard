@@ -48,26 +48,13 @@ def postcard(to_address, from_address, img_url):
          front = img_url,
     )
 
-def to_address():
-    to_address = lob.Address.create(
-        name=os.environ['TO_NAME'],
-        address_line1=os.environ['TO_ADDRESS_LINE_1'],
-        address_city=os.environ['TO_CITY'],
-        address_state=os.environ['TO_STATE'],
-        address_country=os.environ['TO_COUNTRY'],
-        address_zip=os.environ['TO_ZIP']
+def get_address(prefix):
+    address = lob.Address.create(
+        name=os.environ.get(prefix + "_NAME"),
+        address_line1=os.environ.get(prefix + "_ADDRESS_LINE_1"),
+        address_city=os.environ.get(prefix + "_CITY"),
+        address_state=os.environ.get(prefix + "_STATE"),
+        address_country=os.environ.get(prefix + "_COUNTRY"),
+        address_zip=os.environ.get(prefix + "_ZIP")
     )
-    
-    return(to_address)
-
-def from_address():
-    from_address = lob.Address.create(
-        name=os.environ['FROM_NAME'],
-        address_line1=os.environ['FROM_ADDRESS_LINE_1'],
-        address_city=os.environ['FROM_CITY'],
-        address_state=os.environ['FROM_STATE'],
-        address_country=os.environ['FROM_COUNTRY'],
-        address_zip=os.environ['FROM_ZIP']
-    )
-    
-    return(from_address)
+    return(address)

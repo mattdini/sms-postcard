@@ -18,7 +18,7 @@ def lambda_handler(event, context):
     resized = media.mediaHelper.resize_image(tmp_file)
     img_url = media.mediaHelper.save_to_s3(resized)
     
-    lobHelper.postcard(lobHelper.to_address(), lobHelper.from_address(), img_url)
+    lobHelper.postcard(lobHelper.get_address("TO"), lobHelper.get_address("FROM"), img_url)
 
     media.mediaHelper.delete_media(event_body['MessageSid'], event_body['MediaUrl0'])
 
