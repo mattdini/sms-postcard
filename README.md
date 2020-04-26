@@ -61,7 +61,13 @@ Copy the Invoke URL that looks like: `https://1234abcdfg.execute-api.us-west-2.a
 
 Head to Twilio and click on `All Products and Services` > `Phone Numbers` > Click on your Number > Scroll down to `Messaging` > and set `A Message Comes In` to your URL with `HTTP POST`:
 
+![Alt text](docs/twiliosetup.png?raw=true "Twilio Example POST")
 
 ## Secrets
+
+Back in AWS setup your API keys/secrets by going to: Services > AWS Secrets Manager
+Secrets > Click `Store a new secret` >  Click `Other type of secrets (e.g. API key)` and create 3 new keys:
+
+
 
 ## Usage
