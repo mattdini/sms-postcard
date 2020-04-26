@@ -48,13 +48,24 @@ custom:
   FromLine: "The Girls"
 ```
 
+## Pre-Deply Setup Secrets
+
+In AWS setup your API keys/secrets by going to: Services > AWS Secrets Manager
+Secrets > Click `Store a new secret` >  Click `Other type of secrets (e.g. API key)` and create 3 new keys:
+
+
+![Alt text](docs/secrets.png?raw=true "Example Secrets Manager")
+
+- Twilio API keys can be found right on your project dashboard 
+- LOB API keys can be found by click on YOUR NAME > Settings > Secret API Keys
+
 ## Deploy
 
 From command line in the project folder: `sls deploy -v`
 
 ## Post-Deploy Setup
 
-Log into AWS and get your API gateway URL by going to:
+Back in AWS get your API gateway URL by going to:
 Services > API Gateway > `dev-sms-postcard` > Stages > Expand `Dev` > Click `/message/ POST`
 
 Copy the Invoke URL that looks like: `https://1234abcdfg.execute-api.us-west-2.amazonaws.com/dev/message`
@@ -63,11 +74,8 @@ Head to Twilio and click on `All Products and Services` > `Phone Numbers` > Clic
 
 ![Alt text](docs/twiliosetup.png?raw=true "Twilio Example POST")
 
-## Secrets
-
-Back in AWS setup your API keys/secrets by going to: Services > AWS Secrets Manager
-Secrets > Click `Store a new secret` >  Click `Other type of secrets (e.g. API key)` and create 3 new keys:
-
-
-
 ## Usage
+
+Done!  Just send a photo to your Twilio phone number, you should get back a text saying "Thanks!"
+
+You can vew your postcard in LOB by clicking on `Postcards` under `Postcards API` section, when you're happy with it, switch your LOB API key to the `live_` version and you'll be sending postcards in no time!
