@@ -5,6 +5,8 @@
 
 With the quaratine/lockdown in place my parents have been really missing seeing their granddaughters.  I built this as a way to send them pictures in the mail with the least amount of resistance.  No apps to download, no software, just send a text message to a twilio number and a postcard will be mailed the next day!
 
+![Alt text](docs/example.png?raw=true "Example Postcard")
+
 ## Requirements
 
 - A Twilio Account (https://www.twilio.com/)
