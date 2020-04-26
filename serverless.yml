@@ -1,0 +1,90 @@
+service: sms-postcard
+
+custom:
+  bucket: ${self:service}-to-lob
+  region: "us-west-2"
+  ### TO ###
+  ToName: "Papa & Nana"
+  ToAddressLine1: "123 SW Fake Street"
+  ToCity: "Portland"
+  ToState: "OR"
+  ToCountry: "US"
+  ToZip: "97205"
+  ### FROM ###
+  FromName: "The Girls"
+  FromAddressLine1: "456 SE Fake Street"
+  FromCity: "Milwaukie"
+  FromState: "OR"
+  FromCountry: "US"
+  FromZip: "97222"
+  ### Sign Off Line ###
+  FromLine: "The Girls"
+
+provider:
+  name: aws
+  runtime: python3.8
+  region: us-west-2
+  stage: dev
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:PutObject
+        - s3:PutObjectAcl
+      Resource: "arn:aws:s3:::${self:custom.bucket}/*"
+    - Effect: Allow
+      Action: secretsmanager:GetSecretValue
+      Resource: "*"
+
+functions:
+  worker:
+    handler: worker_lambda/handler.lambda_handler
+    layers:
+      - arn:aws:lambda:us-west-2:770693421928:layer:Klayers-python38-Pillow:2
+      - arn:aws:lambda:us-west-2:770693421928:layer:Klayers-python38-requests:3
+    package:
+      include:
+        - helpers/**
+    events:
+      - http:
+          path: message
+          method: post
+          integration: lambda
+          response:
+            headers:
+              Content-Type: "'application/xml'"
+            template: $input.path('$')
+            statusCodes:
+              200:
+                responseModels:
+                  "application/xml": "CreateResponseXml"
+                pattern: ''
+                template:
+                  application/xml: $input.path('$') # XML return object
+    environment:
+      LOB_BUCKET: ${self:custom.bucket}
+      REGION_NAME: ${self:custom.region}
+      TO_NAME: ${self:custom.ToName}
+      TO_ADDRESS_LINE_1: ${self:custom.ToAddressLine1}
+      TO_CITY: ${self:custom.ToCity}
+      TO_STATE: ${self:custom.ToState}
+      TO_COUNTRY: ${self:custom.ToCountry}
+      TO_ZIP: ${self:custom.ToZip}
+      FROM_NAME: ${self:custom.FromName}
+      FROM_ADDRESS_LINE_1: ${self:custom.FromAddressLine1}
+      FROM_CITY: ${self:custom.FromCity}
+      FROM_STATE: ${self:custom.FromState}
+      FROM_COUNTRY: ${self:custom.FromCountry}
+      FROM_ZIP: ${self:custom.FromZip}
+      FROM_LINE: ${self:custom.FromLine}
+
+resources:
+ Resources:
+   NewResource:
+     Type: AWS::S3::Bucket
+     Properties:
+       BucketName: ${self:service}-to-lob
+       LifecycleConfiguration:
+        Rules:
+          - Id: DeleteIn3Days
+            Status: 'Enabled'
+            ExpirationInDays: 3
