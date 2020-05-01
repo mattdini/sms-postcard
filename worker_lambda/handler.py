@@ -13,14 +13,14 @@ def lambda_handler(event, context):
     if event_body['NumMedia'] == '0':
         return respond('No Picture :(')
 
-    normal_url = media.mediaHelper.normal_url(event_body['MediaUrl0'])
-    tmp_file = media.mediaHelper.save_to_tmp(normal_url)
-    resized = media.mediaHelper.resize_image(tmp_file)
-    img_url = media.mediaHelper.save_to_s3(resized)
+    normal_url = media.normal_url(event_body['MediaUrl0'])
+    tmp_file = media.save_to_tmp(normal_url)
+    resized = media.resize_image(tmp_file)
+    img_url = media.save_to_s3(resized)
     
     lobHelper.postcard(lobHelper.get_address("TO"), lobHelper.get_address("FROM"), img_url)
 
-    media.mediaHelper.delete_media(event_body['MessageSid'], event_body['MediaUrl0'])
+    media.delete_media(event_body['MessageSid'], event_body['MediaUrl0'])
 
     return respond('Thanks!')
 
