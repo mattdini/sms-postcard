@@ -2,6 +2,9 @@
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/996946131494b03f23ee/maintainability)](https://codeclimate.com/github/mattdini/sms-postcard/maintainability)
 
+### This project got runner-up in the dev.to / Twilio hackathon! 
+https://dev.to/devteam/announcing-the-twilio-hackathon-winners-1lp4
+
 
 With the quarantine/lockdown in place my parents have been really missing seeing their granddaughters.  I built this as a way to send them pictures in the mail with the least amount of resistance.  No apps to download, no software, just send a text message to a twilio number and a postcard will be mailed the next day!
 
